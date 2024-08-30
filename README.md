@@ -1,107 +1,38 @@
+**#Smart Contract for MyToken**
 
-# Token Smart Contract
+A basic Solidity smart contract for a token called "Gaurav" with the symbol "GP" can be found in this repository. The contract maintains balances for various addresses and permits token minting and burning.
 
-This repository contains a simple token smart contract written in Solidity.
+## Contract Information
 
-## Overview
-
-The `Token` contract allows the creation, minting, and burning of tokens. It includes the following features:
-- Set token name , token abbreviation and total supply during deployment
-- Track total supply of the token
-- Maintain balances of token holders
-- Mint new tokens to an address
-- Burn tokens from an address
+- **Token Symbol**: GP
+- **Token Name**: Gaurav
+- **Total Supply**: Starting at 0
 
 ## Features
 
-- **Name**: Token name
-- **Token Abbreviation**: Token symbol
-- **Total Supply**: Total number of tokens in circulation
-- **Balances**: Mapping of addresses to their token balances
+- Minting tokens: This adds more tokens to the total supply and credits the designated address with them.
+- Burning tokens: If the address has enough tokens, this reduces the total supply and debits the designated address.
 
-## Contract Details
+## Functions
 
-### Variables
+### Open Variables
 
-- `TokenName`: The name of the token.
-- `TokenAbbrv`: The symbol of the token.
-- `TotalSupply`: The total supply of tokens.
-- `balances`: A mapping from addresses to their respective balances.
+- {string public tokenName}: The token's name.
+- {string public tokenSymbol}: The token's symbol.
+- {uint256 public totalSupply}: The token's total supply.
 
-### Constructor
+### Mapping
 
-The constructor initializes the token with a name, symbol, and initial supply.
+A mapping that maintains track of the balance for each address is `mapping(address => uint256) public balances}.
 
-```solidity
-constructor(string memory _tokenName, string memory _tokenAbbrv,uint _totalSupply ){
-    TokenName=_tokenName;
-    TokenAbbrv=_tokenAbbrv;
-    TotalSupply=_totalSupply;
-     balances[msg.sender]=TotalSupply;
-}
-```
+### Mint Function - 
 
-### Functions
+Tokens can be created and assigned to a specific address using the `mint` function. As a result, the recipient address's balance and the total number of tokens available increase.
 
-#### `mint`
+### Burn Function: 
 
-Mints new tokens to a specified address.
+Using the burn function, tokens from a given address can be destroyed. Assuming the holder has sufficient tokens to burn, this reduces both the total supply of tokens and the balance in their address.
 
-```solidity
-function Mint(address to, uint value) external {
- require(to!=address(0),"You are minting to Zero address");
- balances[to]+=value; 
- TotalSupply +=value;
+### Executing Program
 
-}
-```
-
-#### `burn`
-
-Burns tokens from a specified address.
-
-```solidity
-function burn(address from, uint value) external{
-    require(from!=address(0),"You are burning from Zero address");
-    require(balances[from]>value ,"Insufficient balance to burn");
-    balances[from]-=value;
-    TotalSupply -=value;
-}    
-
-```
-
-## Usage
-
-### Deployment
-
-Deploy the contract by providing the token name, token abbreviation, and initial supply.
-
-```solidity
-Token token = new Token("Earth", "ERT", 100);
-```
-
-### Minting Tokens
-
-Mint new tokens to an address.
-
-```solidity
-token.mint(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 1000);
-```
-
-### Burning Tokens
-
-Burn tokens from an address.
-
-```solidity
-token.burn(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 500);
-```
-
-## License
-
-This project is licensed under the MIT License .
-
-## Author
-
-Your Name - [Pallavi Singh] (anshsingh005171@gmail.com)
-
----
+To run this program, you can use Remix, an online Solidity IDE. To get started, go to the Remix website at [Remix](https://remix.ethereum.org/).
