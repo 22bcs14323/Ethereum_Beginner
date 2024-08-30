@@ -1,8 +1,4 @@
-// SPDX-License-Identifier: MIT
-pragma solidity >=0.6.12 <0.9.0;
-
-/*
-       REQUIREMENTS
+ /* REQUIREMENTS
     1. Your contract will have public variables that store the details about your coin (Token Name, Token Abbrv., Total Supply)
     2. Your contract will have a mapping of addresses to balances (address => uint)
     3. You will have a mint function that takes two parameters: an address and a value. 
@@ -15,37 +11,32 @@ pragma solidity >=0.6.12 <0.9.0;
        to the amount that is supposed to be burned.
 */
 
-contract MyToken {
-
-    // public variables here
- string public TokenName;
- string public TokenAbbrv;
- uint public TotalSupply;
  
-    // mapping variable here
-mapping(address=>uint) public balances;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-constructor(string memory _tokenName, string memory _tokenAbbrv,uint _totalSupply ){
-    TokenName=_tokenName;
-    TokenAbbrv=_tokenAbbrv;
-    TotalSupply=_totalSupply;
-     balances[msg.sender]=TotalSupply;
-}
+contract MyToken {
+   // Public variables
+    string public name = "Gaurav";
+    string public symbol = "GP";
+    uint256 public totalSupply = 0;
 
-    // mint function
-function Mint(address to, uint value) external {
- require(to!=address(0),"You are minting to Zero address");
- balances[to]+=value; 
- TotalSupply +=value;
+     // Mapping of addresses to balances it Keeps track of each address's token balance
+    mapping(address => uint256) public balances;
 
-}
-    // burn function
-function burn(address from, uint value) external{
-    require(from!=address(0),"You are burning from Zero address");
-    require(balances[from]>value ,"Insufficient balance to burn");
-    balances[from]-=value;
-    TotalSupply -=value;
+  
+    // Mint function to allow creating new tokens and assigning them to an address
+    function mint(address _account, uint256 _amount) external {
+        require(_amount > 0, "Amount must be greater than zero");
+        totalSupply += _amount;
+        balances[_account] += _amount;
+    }
 
-}    
+    // Burn function, Allows destroying tokens from an address
 
+    function burn(address _account, uint256 _amount) external {
+        require(balances[_account] >= _amount, "Insufficient balance");
+        totalSupply -= _amount;
+        balances[_account] -= _amount;
+    }
 }
